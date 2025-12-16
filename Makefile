@@ -33,14 +33,14 @@ hf-login:
 	git pull origin update
 	git switch update
 	# CAMBIO: Usar 'hf login' en lugar de 'huggingface-cli login' o 'python -m ...'
-	hf login --token $(HF) --add-to-git-credential
+	hf auth login --token $(HF) --add-to-git-credential
 
 push-hub:
 	# CAMBIO: Usa el ID exacto que aparece en tu navegador: Alan012/Drug-classification
 	hf upload Alan012/Drug-classification ./App --repo-type=space --commit-message="Sync App files"
 	hf upload Alan012/Drug-classification ./Model /Model --repo-type=space --commit-message="Sync Model"
 	hf upload Alan012/Drug-classification ./Results /Metrics --repo-type=space --commit-message="Sync Model"
-	
+
 deploy: hf-login push-hub
 
 all: install format train eval update-branch deploy
