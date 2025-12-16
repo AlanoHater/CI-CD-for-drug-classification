@@ -29,5 +29,5 @@ jobs:
         # Instala dependencias para que el make deploy funcione
         run: |
           pip install -r requirements.txt
-          # Ejecuta el despliegue completo
+          pip install -U "huggingface_hub[cli]"
           make deploy HF=$HF

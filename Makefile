@@ -33,7 +33,6 @@ hf-login:
 	# 2. Switch to the 'update' branch (where the model is located)
 	git switch update
 	# 3. Install Hugging Face CLI
-	pip install -U "huggingface_hub[cli]"
 	# 4. Log in using the token passed from the workflow
 	huggingface-cli login --token $(HF) --add-to-git-credential
 
