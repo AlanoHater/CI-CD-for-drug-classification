@@ -1,0 +1,26 @@
+Resumen: CI/CD para Machine Learning
+CI/CD es crucial para operacionalizar modelos de ML de forma rápida, escalable y libre de errores, permitiendo al equipo enfocarse en la mejora del modelo.
+
+Beneficios de CI/CD en ML:
+
+Automatiza el pipeline de entrenamiento: Permite el reentrenamiento automático con nuevos datos de forma programada.
+
+Captura errores tempranamente: Ejecuta pruebas y verificaciones en cada commit de código, detectando bugs, problemas de integración y degradación del rendimiento del modelo.
+
+Reproducibilidad: Garantiza que los modelos puedan ser reconstruidos y reentrenados exactamente igual, al codificar entornos, versionado y configuraciones.
+
+Pruebas y monitoreo: Permite el testing automatizado de modelos nuevos antes del despliegue y facilita la integración con herramientas de monitoreo post-despliegue.
+
+Iteración más rápida: Las nuevas versiones y experimentos se entrenan, prueban y despliegan de forma acelerada y automatizada.
+
+Escalabilidad: Proporciona una solución robusta para manejar proyectos ML grandes y complejos, con alto volumen de datos y dependencias diversas.
+
+Descripción del Proyecto:
+
+El tutorial ejemplifica la implementación de CI/CD para un clasificador de drogas que utiliza un algoritmo Random Forest entrenado con scikit-learn.
+
+Herramientas clave: CML (Continuous Machine Learning) para la evaluación automatizada y GitHub Actions para orquestar todo el pipeline.
+
+Despliegue: La aplicación web y el modelo se despliegan automáticamente en Hugging Face Hub.
+
+Flujo: El proceso es completamente automatizado: un push al repositorio de GitHub desencadena el entrenamiento, la evaluación y la actualización del modelo y la aplicación en Hugging Face en minutos.

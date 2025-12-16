@@ -1,0 +1,14 @@
+// .devcontainer/devcontainer.json
+{
+    "name": "MLOps CI/CD Environment",
+    "build": {
+      "dockerfile": "../Dockerfile",
+      "context": ".."
+    },
+    "settings": {},
+    "extensions": [
+      "ms-python.python",
+      "ms-python.vscode-pylance"
+      // Agrega aquí cualquier otra extensión que uses, como la extensión de Cursor
+    ]
+  }
