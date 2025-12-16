@@ -1,0 +1,59 @@
+# .github/workflows/ci.yml
+
+name: CI - Model Training and Evaluation
+
+# El workflow se dispara con push y pull_request a la rama principal (main)
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  # Job para entrenar, evaluar y reportar el modelo
+  run-ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      # 1. Configuración de Python
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10" # Asegúrate que coincida con tu Dockerfile
+
+      # 2. Configuración de CML
+      - name: Setup CML
+        uses: iterative/setup-cml@v2
+
+      # 3. Instalación de dependencias
+      - name: Install Dependencies
+        run: make install
+
+      # 4. Formato de código (opcional pero recomendado en CI)
+      - name: Code Formatting Check
+        run: make format
+
+      # 5. Entrenamiento del modelo
+      - name: Train Model
+        run: make train
+        # Asegúrate de que train.py crea los archivos en Model/ y Results/
+
+      # 6. Evaluación y reporte con CML
+      - name: Evaluate Model and Report
+        # Esta acción usa el Token de GitHub para interactuar con la PR
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: make eval
+
+      # 7. Versionado de Artefactos (OPCIONAL, según el curso)
+      # Este paso versiona los artefactos (modelo, métricas) en una nueva rama si la CI es exitosa.
+      - name: Version Artifacts
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          git checkout -b update
+          git add Model/ Results/
+          git commit -m "chore: update model and metrics"
+          git push -f origin update
