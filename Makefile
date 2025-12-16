@@ -6,14 +6,6 @@ format:
 	black *.py 
 
 train:
-<<<<<<< HEAD
-	@echo "Creating Model and Results directories..."
-	mkdir -p Model
-	mkdir -p Results
-	
-	@echo "Starting training script..."
-=======
->>>>>>> 4104069ed5c95ea921a9ba73d84f0277ee6f365c
 	python train.py
 
 eval:
@@ -44,8 +36,4 @@ push-hub:
 
 deploy: hf-login push-hub
 
-<<<<<<< HEAD
 all: install format train eval update-branch deploy
-=======
-all: install format train eval update-branch deploy
->>>>>>> 4104069ed5c95ea921a9ba73d84f0277ee6f365c
