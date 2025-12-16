@@ -34,7 +34,7 @@ hf-login:
 	git switch update
 	# 3. Install Hugging Face CLI
 	# 4. Log in using the token passed from the workflow
-	huggingface-cli login --token $(HF) --add-to-git-credential
+	python -m huggingface_hub.cli login --token $(HF) --add-to-git-credential
 
 push-hub:
 	# Upload App folder (Python, README, requirements.txt)
