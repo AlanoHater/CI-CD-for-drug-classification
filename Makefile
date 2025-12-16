@@ -6,8 +6,12 @@ format:
 	black *.py 
 
 train:
+	@echo "Creating Model and Results directories..."
+	mkdir -p Model
+	mkdir -p Results
+	
+	@echo "Starting training script..."
 	python train.py
-
 eval:
 	echo "## Model Metrics" > report.md
 	cat ./Results/metrics.txt >> report.md
