@@ -1,0 +1,33 @@
+name: Continuous Deployment
+on:
+  workflow_run:
+    # Se ejecuta al completarse el workflow de CI
+    workflows: ["Continuous Integration"]
+    types:
+      - completed
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    # Solo ejecuta el despliegue si el CI fue exitoso
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        # Importante: Checkout a la rama 'main' (donde está el cd.yml y el Makefile)
+        
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10' 
+          
+      - name: Deployment To Hugging Face
+        env:
+          # El token de Hugging Face se pasa como variable de entorno $(HF) al Makefile
+          HF: ${{ secrets.HUGGINGFACE_TOKEN }} 
+        # Instala dependencias para que el make deploy funcione
+        run: |
+          pip install -r requirements.txt
+          # Ejecuta el despliegue completo
+          make deploy HF=$HF
