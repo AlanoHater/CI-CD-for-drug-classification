@@ -27,23 +27,20 @@ update-branch:
 	git commit -am "Update with new results"
 	git push --force origin HEAD:update
 
-hf-login:
-	# 1. Pull the latest state of the 'update' branch
+hf-login: 
+	# No es necesario instalar [cli] extra en versiones nuevas, pero no hace daño.
+	pip install -U huggingface_hub
 	git pull origin update
-	# 2. Switch to the 'update' branch (where the model is located)
 	git switch update
-	# 3. Install Hugging Face CLI
-	# 4. Log in using the token passed from the workflow
-	python -m huggingface_hub.cli login --token $(HF) --add-to-git-credential
+	# CAMBIO: Usar 'hf login' en lugar de 'huggingface-cli login' o 'python -m ...'
+	hf login --token $(HF) --add-to-git-credential
 
 push-hub:
-	# Upload App folder (Python, README, requirements.txt)
-	huggingface-cli upload Alan012/Drug-classification ./App --repo-type=space --commit-message="Sync App files"
-	# Upload Model folder (pipeline.skops)
-	huggingface-cli upload Alan012/Drug-classification ./Model /Model --repo-type=space --commit-message="Sync Model"
-	# Upload Results folder (metrics, plot)
-	huggingface-cli upload Alan012/Drug-classification ./Results /Metrics --repo-type=space --commit-message="Sync Model"
-
+	# CAMBIO: Usa el ID exacto que aparece en tu navegador: Alan012/Drug-classification
+	hf upload Alan012/Drug-classification ./App --repo-type=space --commit-message="Sync App files"
+	hf upload Alan012/Drug-classification ./Model /Model --repo-type=space --commit-message="Sync Model"
+	hf upload Alan012/Drug-classification ./Results /Metrics --repo-type=space --commit-message="Sync Model"
+	
 deploy: hf-login push-hub
 
 all: install format train eval update-branch deploy
